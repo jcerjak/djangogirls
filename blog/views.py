@@ -30,7 +30,7 @@ def post_new(request):
             return redirect('post_detail', post_id=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_new.html', {'form': form})
 
 
 @login_required
