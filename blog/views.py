@@ -31,4 +31,16 @@ def post_new(request):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
+def post_edit(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', post_id=post.pk)
+    else:
+        form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
